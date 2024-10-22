@@ -1,5 +1,6 @@
 /* @flow */
 
+// 图片加载器
 export class ImageLoader {
 
   imageList: Array<HTMLImageElement>;
@@ -10,6 +11,7 @@ export class ImageLoader {
     this.loadNum = 0;
   }
 
+  // 准备
   ready(callback: Function) {
     this.imageList.forEach(img => {
       this.loadImg(img);
@@ -22,6 +24,7 @@ export class ImageLoader {
     }, 50);
   }
 
+  // 加载图片
   loadImg(img: HTMLImageElement) {
     const timer = setInterval(() => {
       if(img.complete === true) {
@@ -31,6 +34,7 @@ export class ImageLoader {
     }, 50);
   }
 
+  // 添加图片
   addImg(imageArray: Array<string>) {
     imageArray.forEach((src) => {
       let img = new Image();
@@ -40,6 +44,7 @@ export class ImageLoader {
     });
   }
 
+  // 获取图片
   getImg(name: string) {
     let target;
     this.imageList.forEach((img) => {

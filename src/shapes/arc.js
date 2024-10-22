@@ -3,6 +3,7 @@
 import { display } from '../display';
 import { DefineScale } from '../data/define';
 
+// 弧形类
 export default function(settings: Object, _this: Global): GraghShape {
   const draw = function() {
     const canvas = _this.canvas;

@@ -1,15 +1,16 @@
 /* @flow */
 
-import * as utils from '../utils/helpers';
+import * as utils from "../utils/helpers";
 
 /**
  * @param {Array}  points - point list
  * @return {Array} bounding points. left top, right top, right bottom, left bottom.
  */
+// 获取图形边界
 function getBounding(points: Array<Array<number>>, lineWidth: number) {
   const lw = lineWidth ? lineWidth : 0;
-  const xList = points.map(point => point[0]);
-  const yList = points.map(point => point[1]);
+  const xList = points.map((point) => point[0]);
+  const yList = points.map((point) => point[1]);
   const minX = utils.getMin(xList) - lw;
   const maxX = utils.getMax(xList) + lw;
   const minY = utils.getMin(yList) - lw;
@@ -26,7 +27,7 @@ function getBounding(points: Array<Array<number>>, lineWidth: number) {
     rb,
     lb,
     w,
-    h
+    h,
   };
 }
 

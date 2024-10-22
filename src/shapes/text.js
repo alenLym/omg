@@ -4,12 +4,14 @@ import { display } from '../display';
 import { COLOR, FONT_SIZE } from '../data/default';
 import { DefineScale } from '../data/define';
 
+// 文本类
 export default function(settings: Object, _this: Global): GraghShape {
   // insert into images
   if(settings.background && settings.background.img) {
     !~_this.images.indexOf(settings.background.img) && _this.images.push(settings.background.img);
   }
 
+  // 文本省略
   function text_ellipsis(ctx, str, maxWidth) {
     let width = ctx.measureText(str).width,
       ellipsis = '...',
@@ -26,7 +28,7 @@ export default function(settings: Object, _this: Global): GraghShape {
       return str + ellipsis;
     }
   }
-
+    
   let draw = function() {
     const canvas = _this.canvas;
     const scale = _this.scale;

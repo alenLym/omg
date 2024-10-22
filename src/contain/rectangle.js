@@ -1,5 +1,6 @@
 /* @flow */
 
+// 判断点是否在矩形内
 export default (x: number, y: number, recX: number, recY: number, recW: number, recH: number): boolean => {
   const xRight = x > recX;
   const xLeft = x < recX + recW;

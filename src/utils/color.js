@@ -1,8 +1,9 @@
 /* @flow */
 
+// 颜色类
 export class Color {
 
-  // converts hex to RGB
+  // 将十六进制颜色转换为 RGB
   hexToRGB(hex: string): Object {
     const rgb = [];
 
@@ -26,7 +27,7 @@ export class Color {
     };
   }
 
-  // converts rgb to HSL
+  // 将 RGB 转换为 HSL
   rgbToHSL(r: number, g: number, b: number): Object {
     r /= 255, g /= 255, b /= 255;
     const max = Math.max(r, g, b),
@@ -64,7 +65,7 @@ export class Color {
   // hslToRGB() {
   // }
 
-  // color lighten
+  // 颜色变亮
   lighten(color: string, percent: string): string | void {
     let hsl, h, s, l, rgba, a;
     if(!color || !percent || !/^[0-9]{1,2}%$/.test(percent)) {
@@ -84,7 +85,7 @@ export class Color {
     }
   }
 
-  // color darken
+  // 颜色变暗
   darken(color: string, percent: string): string | void {
     let hsl, h, s, l, rgba, a;
     if(!color || !percent || !/^[0-9]{1,2}%$/.test(percent)) {
@@ -104,18 +105,22 @@ export class Color {
     }
   }
 
+  // 判断是否为十六进制颜色
   isHex(color: string): boolean {
     return !!(/^#[a-fA-F0-9]{3}$|#[a-fA-F0-9]{6}$/.test(color));
   }
 
+  // 判断是否为 RGB 颜色
   isRgb(color: string): boolean {
     return !!(/^rgb\((\s*[0-5]{0,3}\s*,?){3}\)$/.test(color));
   }
 
+  // 判断是否为 RGBA 颜色
   isRgba(color: string): boolean {
     return !!(/^rgba\((\s*[0-5]{0,3}\s*,?){3}[0-9.\s]*\)$/.test(color));
   }
 
+  // 获取 RGB 颜色
   getRgb(color: string): Object {
     let rgb, r, g, b;
     if(this.isHex(color)) {
@@ -128,6 +133,7 @@ export class Color {
     return { r, g, b };
   }
 
+  // 获取 RGBA 颜色
   getRgba(color: string): Object {
     let rgba, r, g, b, a;
     rgba = color.slice(5, -1).split(',');
@@ -136,6 +142,7 @@ export class Color {
     return { r, g, b, a };
   }
 
+  // 获取 HSL 颜色
   getHsl(color: string): Object {
     let hsl, rgb, r, g, b, h, s, l;
     rgb = this.getRgb(color);

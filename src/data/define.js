@@ -8,6 +8,7 @@
  */
 import { getTransformMatrix } from './matrix';
 
+// 定义缩放
 export const DefineScale = function(scale: number, ...args: Array<string>): void {
   args.forEach(a => {
     if(a === 'matrix') {
@@ -18,10 +19,11 @@ export const DefineScale = function(scale: number, ...args: Array<string>): void
   });
 };
 
-/**
+  /**
  * @params: {x, y, width, height}
  * define matrix and origin point.
  */
+// 定义矩阵和原点
 export const DefineMatrix = function(x: number, y: number, width: number, height: number, rotate?: number): void {
   this.matrix = [
     [x, y],

@@ -6,6 +6,7 @@ import {DefineScale} from '../data/define';
 import * as utils from '../utils/helpers';
 import clip from '../clip/index';
 
+// 直线类
 export default function(settings: Object, _this: Global): GraghShape {
   let totalLength;
 

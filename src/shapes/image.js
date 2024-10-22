@@ -3,6 +3,7 @@
 import { display } from '../display';
 import { DefineScale } from '../data/define';
 
+// 图片类
 export default function(settings: Object, _this: Global): GraghShape {
   // insert into images
   if(settings.src) {

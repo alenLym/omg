@@ -7,6 +7,8 @@
  * See: http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
  * @return true if the point is inside the boundary, false otherwise
  */
+
+// 判断点是否在多边形内
 export default (x: number, y: number, points: Array<Array<number>>): boolean => {
   let result = false;
   for (let i = 0, j = points.length - 1; i < points.length; j = i++) {

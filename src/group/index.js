@@ -10,6 +10,7 @@ import { DefineScale, DefineMatrix } from '../data/define';
 // import getBounding from './bounding';
 import * as utils from '../utils/helpers';
 
+// 组设置类型
 type groupSettings = {
   background: {color: string},
   border: {color: string, lineWidth: number},
@@ -22,6 +23,7 @@ type groupSettings = {
   title: string
 }
 
+// 组类
 export default function(settings: groupSettings, _this: Global) {
   const draw = function() {
     const canvas = _this.canvas;
@@ -77,7 +79,7 @@ export default function(settings: groupSettings, _this: Global) {
     canvas.restore();
   };
 
-  // update child's moveX and moveY
+  // 更新子图形的 moveX 和 moveY
   const updateChild = function(child) {
     if(!child.updated || child.forceUpdate) {
       child.updated = true;
@@ -89,6 +91,7 @@ export default function(settings: groupSettings, _this: Global) {
     }
   };
 
+  // 更新所有子图形的 moveX 和 moveY
   const updateAllChildsPosition = function() {
     this.children.forEach(child => {
       child.moveX = child.parent.x + child.parent.moveX;
@@ -99,6 +102,7 @@ export default function(settings: groupSettings, _this: Global) {
   /**
    * @param {Array} childs
    */
+  // 添加子图形
   const add = function(childs) {
     if(!utils.isArr(childs)) {
       throw 'The parameter must be an array';
@@ -123,6 +127,7 @@ export default function(settings: groupSettings, _this: Global) {
     this._._objects = utils.reverse(this._.objects);
   };
 
+  // 移除子图形
   const remove = function(childs) {
     let list = childs;
     if(typeof childs === 'function') {
@@ -141,7 +146,7 @@ export default function(settings: groupSettings, _this: Global) {
     });
   };
 
-  return Object.assign({}, display(settings, _this), {
+    return Object.assign({}, display(settings, _this), {
     type: 'group',
     draw,
     background: settings.background,

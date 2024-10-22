@@ -9,7 +9,7 @@
  * @return {Canvas}
  * @api public
  */
-
+// 自动缩放画布
 export default (canvasList: Array<HTMLCanvasElement>, opt: {
   position: string,
   width: number,

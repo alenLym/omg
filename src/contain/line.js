@@ -1,5 +1,6 @@
 /* @flow */
 
+// 判断点是否在直线内
 // https://github.com/ecomfe/zrender/blob/master/src/contain/line.js
 export default (x0: number, y0: number, x1: number, y1: number, lineWidth: number, x: number, y: number): boolean => {
   if (lineWidth === 0) {
@@ -8,7 +9,7 @@ export default (x0: number, y0: number, x1: number, y1: number, lineWidth: numbe
   let _l = lineWidth;
   let _a = 0;
   let _b = x0;
-  // Quick reject
+  // 快速拒绝
   if (
     (y > y0 + _l && y > y1 + _l)
     || (y < y0 - _l && y < y1 - _l)

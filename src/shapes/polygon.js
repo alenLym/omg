@@ -5,6 +5,7 @@ import { COLOR } from '../data/default';
 import { DefineScale } from '../data/define';
 import clip from '../clip/index';
 
+// 多边形类
 export default function(settings: Object, _this: Global): GraghShape {
   const draw = function() {
     const canvas = _this.canvas;

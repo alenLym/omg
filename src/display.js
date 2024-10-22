@@ -4,17 +4,22 @@ import isPointInner from './inside';
 import getBounding from './clip/bounding';
 import { Tween } from './tween/index';
 import * as utils from './utils/helpers';
-
+// 图形显示类
 class Display {
 
   constructor(settings, _this) {
 
     this._ = _this;
 
+    // 是否可拖拽
     this.enableDrag = false;
+    // 选中时是否改变索引
     this.enableChangeIndex = false;
+    // 是否固定
     this.fixed = false;
+    // 是否裁剪
     this.cliping = false;
+    // 索引
     this.zindex = 0;
 
     // scaled_xxx, the value xxx after scaled, finally display value.
@@ -56,6 +61,7 @@ class Display {
 
   }
 
+  // 绑定事件
   on(eventTypes, callback) {
     if(!eventTypes) {
       throw 'no eventTypes defined!';
@@ -84,11 +90,12 @@ class Display {
     return this;
   }
 
-  // whether pointer is inner this shape
+  // 是否在图形内
   isPointInner(x, y) {
     return isPointInner.bind(this)(x, y);
   }
 
+  // 配置
   config(obj) {
     if(!utils.isObj(obj)) {
       return this;
@@ -101,7 +108,7 @@ class Display {
 
     return this;
   }
-
+  // 动画
   animateTo(keys, configs = {}) {
     this.animating = true;
     let data = {};
@@ -134,18 +141,19 @@ class Display {
     return this;
   }
 
-  // whether this shape can be dragged
+  // 是否可拖拽
   drag(bool) {
     this.enableDrag = bool;
   }
 
-  // when select this shape, whether it should be changed the index
+  // 选中时是否改变索引
   changeIndex(bool) {
     this.enableChangeIndex = bool;
   }
 
 }
 
+// 图形显示类
 export function display(settings, _this) {
   const display = new Display(settings, _this);
 
@@ -180,6 +188,7 @@ export function display(settings, _this) {
 
     updated: false,
 
+    // 获取边界
     getBounding() {
       return getBounding(this.scaled_matrix, this.scaled_lineWidth);
     }

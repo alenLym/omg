@@ -1,7 +1,7 @@
 /* @flow */
 
 import * as easing from './easing';
-
+// 动画设置
 type TweenSettings = {
   from: Object,
   to: Object,
@@ -12,7 +12,7 @@ type TweenSettings = {
   onUpdate: Function,
   onFinish: Function
 }
-
+// 动画类
 export class Tween {
 
   from: Object;
@@ -66,14 +66,14 @@ export class Tween {
     this.finished = false;
     this.keys = {};
   }
-
+  // 更新
   update() {
     this.time = Date.now();
-    // delay some time
+    // 延迟一些时间
     if(this.time < this.startTime) {
       return;
     }
-    // finish animation
+    // 完成动画
     if(this.elapsed === this.duration) {
       if(!this.finished) {
         this.finished = true;

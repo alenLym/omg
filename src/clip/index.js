@@ -1,6 +1,8 @@
 /* @flow */
 
 // TODO: declare shape...
+
+// 图形裁剪
 function clip(_this: Object, canvas: CanvasRenderingContext2D, scale: number): void {
   if(_this.cliping) {
     const bounding = _this.getBounding();

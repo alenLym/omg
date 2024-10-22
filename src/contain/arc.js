@@ -1,12 +1,13 @@
 /* @flow */
 
+// 判断点是否在弧形内
 export default (x: number, y: number, r: number, sa: number, ea: number) => {
   const pi = Math.PI;
   let dis, isIn;
-  // Sector
+  // 扇形
   if(!isNaN(sa) && !isNaN(ea)) {
     let angle = 0;
-    // 4th quadrant
+    // 第四象限
     if(x >= 0 && y >= 0) {
       if(x === 0) {
         angle = pi/2;
@@ -14,7 +15,7 @@ export default (x: number, y: number, r: number, sa: number, ea: number) => {
         angle = Math.atan( (y / x) );
       }
     }
-    // 3th quadrant
+    // 第三象限
     else if(x <= 0 && y >= 0) {
       if(x === 0) {
         angle = pi;
@@ -22,7 +23,7 @@ export default (x: number, y: number, r: number, sa: number, ea: number) => {
         angle = pi - Math.atan(y / Math.abs(x));
       }
     }
-    // secend quadrant
+    // 第二象限
     else if(x <= 0 && y <= 0) {
       if(x === 0) {
         angle = pi;
@@ -30,7 +31,7 @@ export default (x: number, y: number, r: number, sa: number, ea: number) => {
         angle = Math.atan(Math.abs(y) / Math.abs(x)) + pi;
       }
     }
-    // first quadrant
+    // 第一象限
     else if(x >= 0 && y<= 0) {
       if(x === 0) {
         angle = pi*3/2;
@@ -45,9 +46,9 @@ export default (x: number, y: number, r: number, sa: number, ea: number) => {
       isIn = !!( ( (angle >= 0 && angle <= ea) || (angle >= sa && angle <= 2*pi) ) && dis <= r);
     }
   }
-  // normal arc
+  // 普通弧形
   else {
-    isIn = !!( Math.sqrt( x * x + y * y ) <= r );
+    isIn = !!(Math.sqrt(x * x + y * y) <= r);
   }
   return isIn;
 };

@@ -3,6 +3,7 @@
 import * as utils from '../utils/helpers';
 import type {OMG} from '../core';
 
+// 事件类
 export class Event {
 
   _: OMG;
@@ -18,10 +19,12 @@ export class Event {
     this.triggeredMouseMove = false;
   }
 
+  // 获取位置
   getPos(e: MouseEvent & TouchEvent): {x: number, y: number} {
     return utils.getPos(e, this._.element);
   }
 
+  // 触发事件
   triggerEvents() {
     const hasEvents = this._.objects.filter(item => !item.hide).some(item => {
       return item.events && utils.isArr(item.events) || item.enableDrag;
@@ -36,7 +39,7 @@ export class Event {
       });
     }) || this._.globalMousemove;
 
-    // mouseenter mousemove
+    // 触发鼠标进入和鼠标移动
     if(hasEnterOrMove && !this.triggeredMouseMove) {
       this.bindMouseMove();
       this.triggeredMouseMove = true;
@@ -60,14 +63,17 @@ export class Event {
 
   }
 
+  // 绑定鼠标滚轮
   bindMouseWheel() {
     utils.bind(this._.element, 'wheel', this.mouseWheel);
   }
 
+  // 解除鼠标滚轮绑定
   unBindMouseWheel() {
     utils.unbind(this._.element, 'wheel', this.mouseWheel);
   }
 
+  // 鼠标滚轮
   mouseWheel = (e: WheelEvent) => {
     e.preventDefault();
     if(e.deltaY && e.deltaY > 0) {
@@ -78,15 +84,18 @@ export class Event {
     this._.redraw();
   }
 
+  // 绑定鼠标移动
   bindMouseMove() {
     utils.bind(this._.element, 'mousemove', this.mouseEnterOrMove.bind(this));
   }
 
+  // 解除鼠标移动绑定
   unBindMouseMove() {
     utils.unbind(this._.element, 'mousemove', this.mouseEnterOrMove.bind(this));
   }
 
-  mouseEnterOrMove(e_moveOrEnter: MouseEvent & TouchEvent) {
+  // 鼠标进入或移动
+    mouseEnterOrMove(e_moveOrEnter: MouseEvent & TouchEvent) {
     const that = this;
     let isDragging;
 
@@ -99,13 +108,13 @@ export class Event {
       return item.isDragging;
     });
 
-    // trigger mouseenter and mousemove
+    // 触发鼠标进入和鼠标移动
     const movedOn = that._._objects.filter(item => {
       return item.isPointInner(mX, mY) && !item.hide;
     });
 
     if(isDragging) {
-      // dragin
+      // dragin 处理程序
       if(movedOn && movedOn.length > 1) {
         movedOn[1].events && movedOn[1].events.forEach(i => {
           if(i.eventType === 'dragin' && !movedOn[1].hasDraggedIn) {
@@ -115,7 +124,7 @@ export class Event {
         });
       }
 
-      // dragout handler
+      // dragout 处理程序
       const handleDragOut = item => {
         item.hasDraggedIn && item.events.forEach(i => {
           if(i.eventType === 'dragout') {
@@ -125,13 +134,13 @@ export class Event {
         item.hasDraggedIn = false;
       };
 
-      // Determine whether the mouse is dragged out from the shape and trigger dragout handler
+      // 确定鼠标是否从形状中移出，并触发 dragout 处理程序
       that._._objects.some(item => {
         return item.hasDraggedIn && (!item.isPointInner(mX, mY) || movedOn[1] !== item) && handleDragOut(item);
       });
 
     } else {
-      // mouseleave handler
+      // 鼠标离开处理程序
       const handleMoveOut = item => {
         item.hasEnter && item.events.forEach(i => {
           if(i.eventType === 'mouseleave') {
@@ -139,10 +148,10 @@ export class Event {
           }
         });
         item.hasEnter = false;
-      };
-      // normal mousemove
-      // Determine whether the mouse is removed from the shape and trigger mouseleave handler
-      that._._objects.some(item => {
+    };
+    // 正常鼠标移动
+    // 确定鼠标是否从形状中移出，并触发 mouseleave 处理程序
+    that._._objects.some(item => {
         return item.hasEnter && (!item.isPointInner(mX, mY) || movedOn[0] !== item) && handleMoveOut(item);
       });
       if(movedOn && movedOn.length > 0) {
@@ -159,23 +168,24 @@ export class Event {
 
   }
 
+  // 鼠标按下
   mouseDown(e_down: MouseEvent & TouchEvent) {
     let that = this, whichIn, hasEventDrag, hasEventDragEnd, dragCb, dragEndCb;
 
-    // global setting event mousedown
+    // 全局设置事件 mousedown
     this._.globalMousedown && this._.globalMousedown(e_down);
 
     const hasDrags = this._.objects.filter(item => !item.hide).some(item => {
       return item.enableDrag && !item.fixed;
     });
 
-    // drag shape
+    // 获取鼠标位置
     const pX = this.getPos(e_down).x;
     const pY = this.getPos(e_down).y;
     that.cacheX = pX;
     that.cacheY = pY;
 
-    // mousedown
+    // 鼠标按下
     const whichDown = this._._objects.filter(item => {
       return item.isPointInner(pX, pY) && !item.hide;
     });
@@ -189,7 +199,7 @@ export class Event {
       });
     }
 
-    // mouseDrag
+    // 鼠标拖拽图形
     if(hasDrags) {
       whichIn = that._._objects.filter(item => !item.hide).filter(item => {
         return item.isPointInner(pX, pY) && !item.fixed;
@@ -216,7 +226,7 @@ export class Event {
         whichIn[0].moveX = whichIn[0].moveX + mx - that.cacheX;
         whichIn[0].moveY = whichIn[0].moveY + my - that.cacheY;
 
-        // event drag
+        // 事件拖拽
         hasEventDrag && dragCb(whichDown[0]);
 
         that._.redraw();
@@ -239,15 +249,15 @@ export class Event {
             const dp = upOn[1].events.some(i => {
               return i.eventType === 'drop' && i.callback && i.callback(upOn[1], upOn[0]);
             });
-            // if not defined event drop, check if event dragout exist
-            // if yes, trigger the callback dragout.
+            // 如果没有定义事件 drop，检查是否存在事件 dragout
+            // 如果存在，触发回调 dragout。
             !dp && upOn[1].events.some(i => {
               return i.eventType === 'dragout' && i.callback && i.callback(upOn[1]);
             });
           }
         }
 
-        // event dragend
+        // 事件结束
         hasEventDragEnd && dragEndCb(whichDown[0]);
 
         utils.unbind(document, 'mousemove', move_Event);
@@ -260,9 +270,8 @@ export class Event {
       }
     }
 
-    // global translate
+    // 移动画布
     if(this._.enableGlobalTranslate && !(whichIn && whichIn.length > 0)) {
-
       const move_dragCanvas = e_move => {
         const mx = that.getPos(e_move).x;
         const my = that.getPos(e_move).y;
@@ -285,6 +294,7 @@ export class Event {
     }
   }
 
+  // 改变顺序
   changeOrder(item: mixed) {
     const i = this._.objects.indexOf(item);
     const cacheData = this._.objects[i];

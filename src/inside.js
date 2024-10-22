@@ -4,7 +4,7 @@ import insideRectangle from './contain/rectangle';
 import insideLine from './contain/line';
 import insideArc from './contain/arc';
 import insidePolygon from './contain/polygon';
-
+// 图形内部判断
 export default function(x: number, y: number): boolean | void {
   // 图形内部偏移的像素
   const mx = this.moveX * this._.scale;
